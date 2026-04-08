@@ -1,5 +1,6 @@
 package com.domusflow.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.domusflow.common.BaseAuditEntity;
@@ -44,10 +45,10 @@ public class UtilityRecord extends BaseAuditEntity {
     private String waterImageUrl;
 
     @Column(precision = 5, scale = 2)
-    private Double electricAiConfidence;
+    private BigDecimal electricAiConfidence;
 
     @Column(precision = 5, scale = 2)
-    private Double waterAiConfidence;
+    private BigDecimal waterAiConfidence;
 
     @Column(columnDefinition = "TEXT")
     private String aiRawJson;

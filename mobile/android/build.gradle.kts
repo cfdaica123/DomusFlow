@@ -16,7 +16,11 @@ subprojects {
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
 subprojects {
-    project.evaluationDependsOn(":app")
+    // Avoid forcing evaluation of :app during configuration to prevent SDK lookup errors.
+    // If you need to depend on tasks from :app, use task dependencies or providers, e.g.:
+    // tasks.named("someRootTask") {
+    //     dependsOn(":app:someTask")
+    // }
 }
 
 tasks.register<Delete>("clean") {
