@@ -34,24 +34,22 @@ public class Asset extends BaseAuditEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
-    private Room room; // Tài sản này thuộc phòng nào (null nếu là đồ dùng chung/kho)
+    private Room room;
 
     @Column(nullable = false)
-    private String assetName; // Tên: "Điều hòa Inverter", "Giường gỗ xoan đào"
+    private String assetName;
 
-    private String assetCode; // Mã quản lý: ví dụ DF-R101-AC01
+    private String assetCode;
 
-    private String brand; // Thương hiệu (Daikin, Samsung...)
+    private String brand;
 
     @Column(precision = 12, scale = 2)
-    private BigDecimal purchasePrice; // Giá lúc mua (để tính khấu hao)
+    private BigDecimal purchasePrice;
 
-    private String status; // Tình trạng: "Mới", "Đang sử dụng", "Hỏng", "Đã thanh lý"
+    private String status;
 
-    private String imageUrl; // Ảnh chụp tài sản làm bằng chứng lúc bàn giao
-
+    private String imageUrl;
     @Column(columnDefinition = "TEXT")
-    private String description; // Mô tả chi tiết (ví dụ: "Có vết trầy ở góc tủ")
-
-    private java.time.LocalDate purchaseDate; // Ngày mua
+    private String description; 
+    private java.time.LocalDate purchaseDate;
 }

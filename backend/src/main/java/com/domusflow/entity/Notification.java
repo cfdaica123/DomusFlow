@@ -19,7 +19,7 @@ public class Notification extends BaseAuditEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User recipient; // Người nhận thông báo
+    private User recipient;
 
     @Column(nullable = false)
     private String title;
@@ -27,9 +27,9 @@ public class Notification extends BaseAuditEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    private String type; // Ví dụ: INVOICE, MAINTENANCE, AI_OCR, SYSTEM
+    private String type;
 
-    private String targetUrl; // Link để nhấn vào xem chi tiết (ví dụ: link tới hóa đơn)
+    private String targetUrl;
 
     private Boolean isRead = false;
 

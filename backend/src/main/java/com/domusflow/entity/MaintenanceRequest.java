@@ -26,24 +26,24 @@ public class MaintenanceRequest extends BaseAuditEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id", nullable = false)
-    private Tenant tenant; // Người gửi yêu cầu
+    private Tenant tenant;
 
     @Column(nullable = false)
-    private String title; // Ví dụ: "Hỏng vòi hoa sen"
+    private String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String description; // Chi tiết tình trạng hỏng
+    private String description;
 
-    private String evidenceImageUrl; // Ảnh chụp chỗ hỏng để chủ trọ kiểm tra trước
+    private String evidenceImageUrl;
 
     @Enumerated(EnumType.STRING)
     private MaintenanceStatus status = MaintenanceStatus.PENDING;
 
-    private Integer priority; // 1: Gấp, 2: Bình thường, 3: Có thể đợi
+    private Integer priority; 
 
-    private LocalDateTime scheduledAt; // Hẹn giờ qua sửa
-    private LocalDateTime completedAt; // Thời điểm sửa xong thực tế
+    private LocalDateTime scheduledAt;
+    private LocalDateTime completedAt;
 
     @Column(columnDefinition = "TEXT")
-    private String resolutionNote; // Ghi chú của thợ hoặc chủ trọ sau khi sửa xong
+    private String resolutionNote; 
 }

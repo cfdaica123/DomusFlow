@@ -26,7 +26,7 @@ public class Room {
     private Integer floor;
 
     @Column(precision=12, scale=2)
-    private BigDecimal price; //basic rent price for the room
+    private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
     private RoomStatus status;

@@ -59,7 +59,6 @@ public class Invoice extends BaseAuditEntity {
     @Column(nullable = false)
     private LocalDate dueDate;
 
-    // Fee breakdown
     @Column(precision = 12, scale = 2)
     private BigDecimal roomAmount;
 
@@ -78,7 +77,6 @@ public class Invoice extends BaseAuditEntity {
     @Column(precision = 12, scale = 2, nullable = false)
     private BigDecimal totalAmount;
 
-    // Invoice status (UNPAID, PARTIAL, PAID, OVERDUE, CANCELLED)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private InvoiceStatus status;

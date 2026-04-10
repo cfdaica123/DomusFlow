@@ -35,13 +35,11 @@ public class User extends BaseAuditEntity {
 
     private Boolean isActive = true;
 
-    // Permissions: ROLE_ADMIN, ROLE_TENANT
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     private Set<String> roles;
 
-    // Link to Tenant if this user is a tenant
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id")
     private Tenant tenant;

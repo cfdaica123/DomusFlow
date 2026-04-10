@@ -37,7 +37,6 @@ public class Payment extends BaseAuditEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Each payment belongs to one invoice
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "invoice_id", nullable = false)
     private Invoice invoice;
@@ -51,7 +50,7 @@ public class Payment extends BaseAuditEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentStatus status; // PENDING, SUCCESS, FAILED
+    private PaymentStatus status;
 
     @Column(length = 100)
     private String transactionNo;
@@ -62,7 +61,7 @@ public class Payment extends BaseAuditEntity {
     private LocalDateTime paymentDate;
 
     @Column(length = 10)
-    private String currency; // VND, USD, JPY
+    private String currency;
 
     @Column(length = 500)
     private String note;

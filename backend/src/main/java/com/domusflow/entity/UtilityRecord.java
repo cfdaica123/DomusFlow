@@ -31,7 +31,6 @@ public class UtilityRecord extends BaseAuditEntity {
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    // Electricity/Water Meter
     private Double oldElectricIndex;
     private Double newElectricIndex;
 
@@ -55,7 +54,6 @@ public class UtilityRecord extends BaseAuditEntity {
 
     private Boolean isVerified = false;
 
-    // Thêm trường này để biết khách nào đang ở thời điểm ghi số (đối chất)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id")
     private Tenant tenantAtRecording;

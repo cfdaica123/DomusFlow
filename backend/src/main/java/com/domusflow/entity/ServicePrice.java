@@ -32,16 +32,15 @@ public class ServicePrice extends BaseAuditEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String serviceName; // Examples: "Household electricity", "Tap water"
+    private String serviceName;
 
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal unitPrice;
 
-    private String unit; // "kWh" for electricity, "m3" for water, "month" for wifi...
-
+    private String unit;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ServiceType type; // ELECTRICITY, WATER, OTHER...
+    private ServiceType type;
 
     private String description;
 

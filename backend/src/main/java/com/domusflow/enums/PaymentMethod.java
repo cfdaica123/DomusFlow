@@ -8,9 +8,9 @@ import lombok.Getter;
 public enum PaymentMethod {
     CASH("Cash"),
     BANK_TRANSFER("Bank Transfer"),
-    E_WALLET("E-Wallet"), // MoMo, ZaloPay, PayPal, Apple Pay...
-    PAYMENT_GATEWAY("Online Payment"), // VNPay, Stripe, Razorpay...
-    CARD("Card");                      // Credit + Debit
+    E_WALLET("E-Wallet"),
+    PAYMENT_GATEWAY("Online Payment"),
+    CARD("Card");
 
     private final String displayName;
 }

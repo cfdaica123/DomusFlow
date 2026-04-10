@@ -38,12 +38,10 @@ public class Contract extends BaseAuditEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // A room can have multiple contracts over time
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    // A tenant can have multiple contracts
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id", nullable = false)
     private Tenant tenant;
@@ -51,7 +49,6 @@ public class Contract extends BaseAuditEntity {
     @Column(nullable = false)
     private LocalDate startDate;
 
-    // Nullable for open-ended contracts
     private LocalDate endDate;
 
     @Column(precision = 12, scale = 2, nullable = false)
@@ -60,20 +57,16 @@ public class Contract extends BaseAuditEntity {
     @Column(precision = 12, scale = 2)
     private BigDecimal depositAmount;
 
-    // Day of month when payment is due (1–31)
     @Min(1)
     @Max(31)
     @Column(name = "payment_day")
     private Integer paymentDay;
 
-    // Unique contract code for tracking/searching
     @Column(unique = true, length = 50)
     private String contractCode;
 
-    // URL to the scanned/signed contract file
     private String contractUrl;
 
-    // Additional terms or special notes
     @Column(columnDefinition = "TEXT")
     private String terms;
 
@@ -82,7 +75,6 @@ public class Contract extends BaseAuditEntity {
     @Builder.Default
     private ContractStatus status = ContractStatus.DRAFT;
 
-    // Indicates whether the contract is currently active in the system
     @Column(nullable = false)
     @Builder.Default
     private Boolean isActive = true;

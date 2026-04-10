@@ -7,11 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum PaymentStatus {
 
-    PENDING("Pending"), // Payment created but not completed
-    SUCCESS("Successful"), // Payment completed successfully
-    FAILED("Failed"), // Payment failed
-    CANCELLED("Cancelled"), // User/system cancelled
-    REFUNDED("Refunded");        // Money returned to payer
+    PENDING("Pending"),
+    SUCCESS("Successful"), 
+    FAILED("Failed"),
+    CANCELLED("Cancelled"),
+    REFUNDED("Refunded");
 
     private final String displayName;
 }

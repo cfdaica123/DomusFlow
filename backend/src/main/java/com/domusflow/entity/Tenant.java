@@ -41,11 +41,11 @@ public class Tenant extends BaseAuditEntity{
 
     private Gender gender;
 
-    private String occupation; // Job
+    private String occupation;
 
-    private String address; // Hometown
+    private String address;
 
-    private String emergencyContact; // Emergency contact information (name and phone number)
+    private String emergencyContact;
 
-    private boolean isActive = true; // Indicates if the tenant is currently active (living in the dormitory)
+    private boolean isActive = true;
 }
