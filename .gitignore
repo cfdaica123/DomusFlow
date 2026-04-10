@@ -78,3 +78,18 @@ temp/
 # ========================
 *.sqlite
 *.db
+.fake
+
+# Environment variables
+.env
+
+# Build
+target/
+node_modules/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
