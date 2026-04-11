@@ -39,6 +39,7 @@ public class Asset extends BaseAuditEntity {
     @Column(nullable = false)
     private String assetName;
 
+    @Column(unique = true)
     private String assetCode;
 
     private String brand;
