@@ -3,9 +3,12 @@ package com.domusflow.entity;
 import java.math.BigDecimal;
 
 import com.domusflow.common.BaseAuditEntity;
+import com.domusflow.enums.AssetStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -47,7 +50,8 @@ public class Asset extends BaseAuditEntity {
     @Column(precision = 12, scale = 2)
     private BigDecimal purchasePrice;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private AssetStatus status;
 
     private String imageUrl;
     @Column(columnDefinition = "TEXT")

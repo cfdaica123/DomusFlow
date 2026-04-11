@@ -28,36 +28,32 @@ import lombok.RequiredArgsConstructor;
 public class RoomController {
 
     private final RoomService roomService;
-
+    
     @GetMapping
     public ResponseEntity<List<RoomResponse>> getAll() {
         return ResponseEntity.ok(roomService.getAll());
     }
 
-    // CREATE
     @PostMapping
     public ResponseEntity<RoomResponse> create(@RequestBody CreateRoomRequest request) {
         return ResponseEntity.ok(roomService.create(request));
     }
-    // GET BY ID
+
     @GetMapping("/{id}")
     public ResponseEntity<RoomResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(roomService.getById(id));
     }
 
-    // GET BY STATUS
     @GetMapping("/status")
     public ResponseEntity<List<RoomResponse>> getByStatus(@RequestParam RoomStatus status) {
         return ResponseEntity.ok(roomService.getByStatus(status));
     }
 
-    // GET BY FLOOR
     @GetMapping("/floor")
     public ResponseEntity<List<RoomResponse>> getByFloor(@RequestParam Integer floor) {
         return ResponseEntity.ok(roomService.getByFloor(floor));
     }
 
-    // GET BY PRICE RANGE
     @GetMapping("/price")
     public ResponseEntity<List<RoomResponse>> getByPrice(
             @RequestParam BigDecimal min,
@@ -66,7 +62,6 @@ public class RoomController {
         return ResponseEntity.ok(roomService.getByPriceBetween(min, max));
     }
 
-    // UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<RoomResponse> update(
             @PathVariable Long id,
@@ -75,10 +70,14 @@ public class RoomController {
         return ResponseEntity.ok(roomService.update(id, request));
     }
 
-    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         roomService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<RoomResponse>> searchByName(@RequestParam String roomNumber) {
+        return ResponseEntity.ok(roomService.searchByName(roomNumber));
     }
 }

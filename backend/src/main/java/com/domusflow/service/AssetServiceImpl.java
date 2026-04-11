@@ -2,12 +2,17 @@ package com.domusflow.service;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.domusflow.dto.AssetResponse;
 import com.domusflow.dto.CreateAssetRequest;
 import com.domusflow.dto.UpdateAssetRequest;
 import com.domusflow.entity.Asset;
 import com.domusflow.entity.Room;
+import com.domusflow.enums.AssetStatus;
+import com.domusflow.mapper.AssetMapper;
 import com.domusflow.repository.AssetRepository;
 import com.domusflow.repository.RoomRepository;
 
@@ -21,75 +26,89 @@ public class AssetServiceImpl implements AssetService {
     private final RoomRepository roomRepository;
 
     @Override
-    public Asset create(CreateAssetRequest request) {
+    public AssetResponse create(CreateAssetRequest request) {
 
-        // check room
         Room room = roomRepository.findById(request.getRoomId())
-                .orElseThrow(() -> new RuntimeException("Room not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found"));
 
-        // check assetCode
         if (request.getAssetCode() != null
                 && assetRepository.findByAssetCode(request.getAssetCode()).isPresent()) {
-            throw new RuntimeException("Asset code already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Asset code already exists");
         }
 
-        Asset asset = Asset.builder()
-                .room(room)
-                .assetName(request.getAssetName())
-                .assetCode(request.getAssetCode())
-                .brand(request.getBrand())
-                .purchasePrice(request.getPurchasePrice())
-                .status("ACTIVE")
-                .imageUrl(request.getImageUrl())
-                .description(request.getDescription())
-                .purchaseDate(request.getPurchaseDate())
-                .build();
+        Asset asset = AssetMapper.toEntity(request, room);
+        asset.setStatus(AssetStatus.ACTIVE);
 
-        return assetRepository.save(asset);
+        return AssetMapper.toResponse(assetRepository.save(asset));
     }
 
     @Override
-    public Asset getById(Long id) {
-        return assetRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Asset not found"));
-    }
-
-    @Override
-    public List<Asset> getByStatus(String status) {
-        return assetRepository.findByStatus(status);
-    }
-
-    @Override
-    public List<Asset> getByRoomAndStatus(Long roomId, String status) {
-        return assetRepository.findByRoomIdAndStatus(roomId, status);
-    }
-
-    @Override
-    public Asset update(Long id, UpdateAssetRequest request) {
+    public AssetResponse findById(Long id) {
 
         Asset asset = assetRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Asset not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found"));
 
-        if (request.getAssetName() != null) {
-            asset.setAssetName(request.getAssetName());
+        return AssetMapper.toResponse(asset);
+    }
+
+    @Override
+    public List<AssetResponse> findAll() {
+        return assetRepository.findAll()
+                .stream()
+                .map(AssetMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public List<AssetResponse> find(Long roomId, AssetStatus status) {
+
+        List<Asset> assets;
+
+        if (roomId != null && status != null) {
+            assets = assetRepository.findByRoomIdAndStatus(roomId, status);
+        } else if (roomId != null) {
+            assets = assetRepository.findByRoomId(roomId);
+        } else if (status != null) {
+            assets = assetRepository.findByStatus(status);
+        } else {
+            assets = assetRepository.findAll();
         }
 
-        if (request.getStatus() != null) {
-            asset.setStatus(request.getStatus());
+        return assets.stream()
+                .map(AssetMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public List<AssetResponse> searchByName(String name) {
+        if (name == null || name.isBlank()) {
+            return List.of();
         }
 
-        if (request.getBrand() != null) {
-            asset.setBrand(request.getBrand());
-        }
+        return assetRepository
+                .findByAssetNameContainingIgnoreCase(name.trim())
+                .stream()
+                .map(AssetMapper::toResponse)
+                .toList();
+    }
 
-        return assetRepository.save(asset);
+    @Override
+    public AssetResponse update(Long id, UpdateAssetRequest request) {
+
+        Asset asset = assetRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found"));
+
+        AssetMapper.updateEntity(asset, request);
+
+        return AssetMapper.toResponse(assetRepository.save(asset));
     }
 
     @Override
     public void delete(Long id) {
-        if (!assetRepository.existsById(id)) {
-            throw new RuntimeException("Asset not found");
-        }
-        assetRepository.deleteById(id);
+
+        Asset asset = assetRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found"));
+
+        assetRepository.delete(asset);
     }
 }

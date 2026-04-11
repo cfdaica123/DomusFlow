@@ -19,4 +19,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findByFloor(Integer floor);
 
     List<Room> findByPriceBetween(java.math.BigDecimal minPrice, java.math.BigDecimal maxPrice);
+
+    List<Room> findByRoomNumberContainingIgnoreCase(String roomNumber);
 }

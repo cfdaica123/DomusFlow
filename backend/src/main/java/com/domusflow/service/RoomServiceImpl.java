@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.domusflow.dto.AssetResponse;
 import com.domusflow.dto.CreateRoomRequest;
 import com.domusflow.dto.RoomResponse;
 import com.domusflow.dto.UpdateRoomRequest;
 import com.domusflow.entity.Room;
 import com.domusflow.enums.RoomStatus;
+import com.domusflow.mapper.AssetMapper;
 import com.domusflow.mapper.RoomMapper;
 import com.domusflow.repository.RoomRepository;
 
@@ -111,5 +113,18 @@ public class RoomServiceImpl implements RoomService {
             throw new IllegalArgumentException("Room not found");
         }
         roomRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RoomResponse> searchByName(String name) {
+        if (name == null || name.isBlank()) {
+            return List.of();
+        }
+
+        return roomRepository
+                .findByRoomNumberContainingIgnoreCase(name.trim())
+                .stream()
+                .map(RoomMapper::toResponse)
+                .toList();
     }
 }
