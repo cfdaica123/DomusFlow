@@ -116,13 +116,13 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomResponse> searchByName(String name) {
-        if (name == null || name.isBlank()) {
+    public List<RoomResponse> searchByRoomNumber(String roomNumber) {
+        if (roomNumber == null || roomNumber.isBlank()) {
             return List.of();
         }
 
         return roomRepository
-                .findByRoomNumberContainingIgnoreCase(name.trim())
+                .findByRoomNumberContainingIgnoreCase(roomNumber.trim())
                 .stream()
                 .map(RoomMapper::toResponse)
                 .toList();

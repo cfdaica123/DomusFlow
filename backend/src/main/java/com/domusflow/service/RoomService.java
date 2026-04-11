@@ -23,7 +23,7 @@ public interface RoomService {
 
     RoomResponse update(Long id, UpdateRoomRequest request);
 
-    List<RoomResponse> searchByName(String roomNumber);
+    List<RoomResponse> searchByRoomNumber(String roomNumber);
 
     void delete(Long id);
 }

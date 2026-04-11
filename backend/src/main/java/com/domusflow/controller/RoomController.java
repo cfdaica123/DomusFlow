@@ -77,7 +77,7 @@ public class RoomController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<RoomResponse>> searchByName(@RequestParam String roomNumber) {
-        return ResponseEntity.ok(roomService.searchByName(roomNumber));
+    public ResponseEntity<List<RoomResponse>> searchByRoomNumber(@RequestParam String roomNumber) {
+        return ResponseEntity.ok(roomService.searchByRoomNumber(roomNumber));
     }
 }
