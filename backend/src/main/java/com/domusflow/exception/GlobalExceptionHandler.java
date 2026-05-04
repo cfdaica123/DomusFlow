@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // Runtime (business error)
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntime(RuntimeException ex) {
 
@@ -21,17 +22,29 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(error);
     }
 
+    // Validation error (@Valid)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidation(MethodArgumentNotValidException ex) {
 
         Map<String, String> error = new HashMap<>();
-        error.put("message", "Validation failed");
+
+        String message = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .findFirst()
+                .map(e -> e.getDefaultMessage())
+                .orElse("Validation failed");
+
+        error.put("message", message);
 
         return ResponseEntity.badRequest().body(error);
     }
 
+    // system error
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleException(Exception ex) {
+
+        ex.printStackTrace();
 
         Map<String, String> error = new HashMap<>();
         error.put("message", "Internal server error");

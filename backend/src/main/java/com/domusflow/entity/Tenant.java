@@ -27,6 +27,8 @@ public class Tenant extends BaseAuditEntity{
     @Column(nullable = false, unique=true)
     private String phone;
     
+    @NotBlank(message = "Email is required")
+    @Column(nullable = false, unique = true)
     private String email;
 
     /**
@@ -39,6 +41,7 @@ public class Tenant extends BaseAuditEntity{
 
     private java.time.LocalDate birthDate;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private String occupation;
